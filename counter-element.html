@@ -1,0 +1,64 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
+<dom-module id="counter-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-input {
+        width: 80px
+      }
+    </style>
+    <h2>Counter</h2>
+    <paper-input always-float-label label="Step" value={{step}}></paper-input>
+    <paper-icon-button icon="arrow-upward" on-click="increment"></paper-icon-button> 
+    <span>[[count]]</span>
+    <paper-icon-button icon="arrow-downward" on-click="decrement"></paper-icon-button> 
+  </template>
+
+  <script>
+    /**
+     * `counter-element`
+     * A counter
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class CounterElement extends Polymer.Element {
+      static get is() { return 'counter-element'; }
+      static get properties() {
+        return {
+          count: {
+            type: Number,
+            value: 0
+          },
+          step: {
+            type: Number,
+            value: 1
+          }
+        };
+      }
+      increment () {
+        this.count = this.count + (+this.step)
+        this.checkNaN()
+      }
+
+      decrement () {
+        this.count = this.count - (+this.step)
+        this.checkNaN()
+      }
+
+      checkNaN () {
+        if (isNaN(this.count))
+          this.count = 0, this.step = 1
+      }
+    }
+
+    window.customElements.define(CounterElement.is, CounterElement);
+  </script>
+</dom-module>
